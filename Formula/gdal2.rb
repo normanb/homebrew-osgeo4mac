@@ -13,9 +13,6 @@ class Gdal2 < Formula
 
   head "https://github.com/OSGeo/gdal.git", :branch => "master"
 
-  # Needed to build the swig bindings, until https://github.com/OSGeo/gdal/pull/713 is merged.
-  patch :DATA
-
   def plugins_subdirectory
     gdal_ver_list = version.to_s.split(".")
     "gdalplugins/#{gdal_ver_list[0]}.#{gdal_ver_list[1]}"
