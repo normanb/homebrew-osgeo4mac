@@ -238,6 +238,8 @@ class Gdal2 < Formula
     ENV.append "CFLAGS", "-I#{sqlite.opt_include}"
 
     ENV.append "LDFLAGS", "-L#{Formula["ogdi"].opt_lib}/ogdi" if build.with? "ogdi"
+    
+    system "cd gdal"
 
     # GDAL looks for the renamed hdf4 library, which is an artifact of old builds, so we need to repoint it
     inreplace "configure", "-ldf", "-lhdf" if build.with? "complete"
@@ -260,7 +262,6 @@ class Gdal2 < Formula
     # See: https://github.com/OSGeo/homebrew-osgeo4mac/issues/276
     ENV.delete("SDKROOT") if DevelopmentTools.clang_build_version >= 900
 
-    system "cd gdal"
     system "./configure", *configure_args
     system "make"
     system "make", "install"
