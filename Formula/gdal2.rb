@@ -3,6 +3,7 @@ class Gdal2 < Formula
   homepage "http://www.gdal.org/"
   url "https://github.com/OSGeo/gdal/archive/master.zip"
   sha256 "45ab04707a57d72195649a5c6c1e49660a9c617594b015d047ec82c1ee520b04"
+  version "2.4.0"
   
   head do
     url "https://svn.osgeo.org/gdal/trunk/gdal"
