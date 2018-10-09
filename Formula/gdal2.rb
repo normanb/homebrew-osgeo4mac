@@ -47,6 +47,7 @@ class Gdal2 < Formula
   depends_on "proj"
   depends_on "geos"
   depends_on "json-c"
+  depends_on "webp"
 
   depends_on "sqlite" # To ensure compatibility with SpatiaLite.
   depends_on "pcre" # for REGEXP operator in SQLite/Spatialite driver
@@ -63,8 +64,6 @@ class Gdal2 < Formula
   depends_on "libkml-dev" if build.with? "libkml"
 
   depends_on :java if build.with? "swig-java"
-
-  depends_on "webp"
 
   if build.with? "complete"
     # Raster libraries
@@ -137,7 +136,6 @@ class Gdal2 < Formula
       odbc
       dods-root
       epsilon
-      webp
       openjpeg
       zstd
     ]
