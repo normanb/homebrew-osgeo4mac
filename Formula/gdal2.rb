@@ -73,7 +73,6 @@ class Gdal2 < Formula
     depends_on "netcdf" # Also brings in HDF5
     depends_on "osgeo/osgeo4mac/hdf4"
     depends_on "jasper"
-    depends_on "webp"
     depends_on "cfitsio"
     depends_on "epsilon"
     depends_on "libdap"
@@ -155,7 +154,6 @@ class Gdal2 < Formula
       odbc
       dods-root
       epsilon
-      webp
       openjpeg
       zstd
     ]
