@@ -69,13 +69,6 @@ class Gdal2 < Formula
     depends_on "webp"
     depends_on "openjpeg"
     depends_on "zstd"
-
-    # Vector libraries
-    depends_on "unixodbc" # OS X version is not complete enough
-    depends_on "xerces-c"
-
-    # Other libraries
-    depends_on "xz" # get liblzma compression algorithm library from XZutils
   end
 
   if build.with? "swig-java"
@@ -147,11 +140,7 @@ class Gdal2 < Formula
       openjpeg
       zstd
     ]
-    if build.with? "complete"
-      supported_backends.delete "liblzma"
-      args << "--with-liblzma=yes"
-      args.concat(supported_backends.map { |b| "--with-" + b + "=" + HOMEBREW_PREFIX })
-    elsif build.without? "unsupported"
+    if build.without? "unsupported"
       args.concat(supported_backends.map { |b| "--without-" + b })
     end
 
@@ -236,9 +225,6 @@ class Gdal2 < Formula
     ENV.append "LDFLAGS", "-L#{Formula["ogdi"].opt_lib}/ogdi" if build.with? "ogdi"
     
     Dir.chdir('gdal')
-
-    # GDAL looks for the renamed hdf4 library, which is an artifact of old builds, so we need to repoint it
-    inreplace "configure", "-ldf", "-lhdf" if build.with? "complete"
 
     # Reset ARCHFLAGS to match how we build.
     ENV["ARCHFLAGS"] = "-arch #{MacOS.preferred_arch}"
