@@ -260,6 +260,7 @@ class Gdal2 < Formula
     # See: https://github.com/OSGeo/homebrew-osgeo4mac/issues/276
     ENV.delete("SDKROOT") if DevelopmentTools.clang_build_version >= 900
 
+    system "cd gdal"
     system "./configure", *configure_args
     system "make"
     system "make", "install"
