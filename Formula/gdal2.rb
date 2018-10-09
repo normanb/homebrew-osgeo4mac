@@ -105,7 +105,7 @@ class Gdal2 < Formula
 
       # Default Homebrew backends.
       "--with-jpeg=#{HOMEBREW_PREFIX}",
-      "--with-webp=#{HOMEBREW_PREFIX}",
+      "--with-webp=#{Formula["webp"].opt_prefix}",
       "--without-jpeg12", # Needs specially configured JPEG and TIFF libraries.
       "--with-gif=#{HOMEBREW_PREFIX}",
       "--with-libtiff=internal",
