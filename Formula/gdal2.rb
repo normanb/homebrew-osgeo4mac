@@ -11,7 +11,10 @@ class Gdal2 < Formula
     sha256 "f67eaadc28e5feb7502ed693d03077f6efd8fb810ec483b1e439b4d0c8aba90e" => :sierra
   end
 
-  head "https://github.com/OSGeo/gdal.git", :branch => "master"
+  head do
+    "https://github.com/OSGeo/gdal.git", :branch => "master"
+    depends_on "doxygen" => :build
+  end
 
   def plugins_subdirectory
     gdal_ver_list = version.to_s.split(".")
