@@ -105,6 +105,7 @@ class Gdal2 < Formula
 
       # Default Homebrew backends.
       "--with-jpeg=#{HOMEBREW_PREFIX}",
+      "--with-webp=#{HOMEBREW_PREFIX}",
       "--without-jpeg12", # Needs specially configured JPEG and TIFF libraries.
       "--with-gif=#{HOMEBREW_PREFIX}",
       "--with-libtiff=internal",
@@ -116,7 +117,6 @@ class Gdal2 < Formula
       "--with-static-proj4=#{HOMEBREW_PREFIX}",
       "--with-libjson-c=#{Formula["json-c"].opt_prefix}",
       "--with-xml2=#{Formula["libxml2"].opt_bin}/xml2-config",
-      "--with-webp=#{HOMEBREW_PREFIX}",
 
       # GRASS backend explicitly disabled.  Creates a chicken-and-egg problem.
       # Should be installed separately after GRASS installation using the
