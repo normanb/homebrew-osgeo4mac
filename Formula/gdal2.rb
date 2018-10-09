@@ -17,7 +17,7 @@ class Gdal2 < Formula
   end
 
   # Needed to build the swig bindings, until https://github.com/OSGeo/gdal/pull/713 is merged.
-  patch :DATA
+  # patch :DATA
 
   def plugins_subdirectory
     gdal_ver_list = version.to_s.split(".")
