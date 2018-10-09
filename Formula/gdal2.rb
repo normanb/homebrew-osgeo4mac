@@ -12,7 +12,7 @@ class Gdal2 < Formula
   end
 
   head do
-    "https://github.com/OSGeo/gdal.git", :branch => "master"
+    url "https://github.com/OSGeo/gdal.git", :branch => "master"
     depends_on "doxygen" => :build
   end
 
