@@ -1,14 +1,17 @@
 class Gdal2 < Formula
   desc "GDAL: Geospatial Data Abstraction Library"
   homepage "http://www.gdal.org/"
-  url "https://github.com/OSGeo/gdal/archive/master.zip"
-  sha256 "45ab04707a57d72195649a5c6c1e49660a9c617594b015d047ec82c1ee520b04"
-  version "2.4.0"
-  
-  head do
-    url "https://svn.osgeo.org/gdal/trunk/gdal"
-    depends_on "doxygen" => :build
+  url "http://download.osgeo.org/gdal/2.3.1/gdal-2.3.1.tar.gz"
+  sha256 "034456405d3c43d42643ba68685e4a76da71f040f139d7c57b9a12fbf1378223"
+
+  bottle do
+    root_url "https://dl.bintray.com/homebrew-osgeo/osgeo-bottles"
+    rebuild 3
+    sha256 "f67eaadc28e5feb7502ed693d03077f6efd8fb810ec483b1e439b4d0c8aba90e" => :high_sierra
+    sha256 "f67eaadc28e5feb7502ed693d03077f6efd8fb810ec483b1e439b4d0c8aba90e" => :sierra
   end
+
+  head "https://github.com/OSGeo/gdal.git", :branch => "master"
 
   # Needed to build the swig bindings, until https://github.com/OSGeo/gdal/pull/713 is merged.
   patch :DATA
