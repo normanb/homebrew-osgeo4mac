@@ -64,9 +64,10 @@ class Gdal2 < Formula
 
   depends_on :java if build.with? "swig-java"
 
+  depends_on "webp"
+
   if build.with? "complete"
     # Raster libraries
-    depends_on "webp"
     depends_on "openjpeg"
     depends_on "zstd"
   end
