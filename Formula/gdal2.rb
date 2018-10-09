@@ -116,6 +116,7 @@ class Gdal2 < Formula
       "--with-static-proj4=#{HOMEBREW_PREFIX}",
       "--with-libjson-c=#{Formula["json-c"].opt_prefix}",
       "--with-xml2=#{Formula["libxml2"].opt_bin}/xml2-config",
+      "--with-webp",
 
       # GRASS backend explicitly disabled.  Creates a chicken-and-egg problem.
       # Should be installed separately after GRASS installation using the
