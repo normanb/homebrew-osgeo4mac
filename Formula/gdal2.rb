@@ -16,6 +16,9 @@ class Gdal2 < Formula
     depends_on "doxygen" => :build
   end
 
+  # Needed to build the swig bindings, until https://github.com/OSGeo/gdal/pull/713 is merged.
+  patch :DATA
+
   def plugins_subdirectory
     gdal_ver_list = version.to_s.split(".")
     "gdalplugins/#{gdal_ver_list[0]}.#{gdal_ver_list[1]}"
@@ -67,8 +70,23 @@ class Gdal2 < Formula
 
   if build.with? "complete"
     # Raster libraries
+    depends_on "netcdf" # Also brings in HDF5
+    depends_on "osgeo/osgeo4mac/hdf4"
+    depends_on "jasper"
+    depends_on "webp"
+    depends_on "cfitsio"
+    depends_on "epsilon"
+    depends_on "libdap"
+    depends_on "libxml2"
     depends_on "openjpeg"
     depends_on "zstd"
+
+    # Vector libraries
+    depends_on "unixodbc" # OS X version is not complete enough
+    depends_on "xerces-c"
+
+    # Other libraries
+    depends_on "xz" # get liblzma compression algorithm library from XZutils
   end
 
   if build.with? "swig-java"
@@ -105,7 +123,6 @@ class Gdal2 < Formula
 
       # Default Homebrew backends.
       "--with-jpeg=#{HOMEBREW_PREFIX}",
-      "--with-webp=#{Formula["webp"].opt_prefix}",
       "--without-jpeg12", # Needs specially configured JPEG and TIFF libraries.
       "--with-gif=#{HOMEBREW_PREFIX}",
       "--with-libtiff=internal",
@@ -117,6 +134,7 @@ class Gdal2 < Formula
       "--with-static-proj4=#{HOMEBREW_PREFIX}",
       "--with-libjson-c=#{Formula["json-c"].opt_prefix}",
       "--with-xml2=#{Formula["libxml2"].opt_bin}/xml2-config",
+      "--with-webp=#{HOMEBREW_PREFIX}",
 
       # GRASS backend explicitly disabled.  Creates a chicken-and-egg problem.
       # Should be installed separately after GRASS installation using the
@@ -137,10 +155,15 @@ class Gdal2 < Formula
       odbc
       dods-root
       epsilon
+      webp
       openjpeg
       zstd
     ]
-    if build.without? "unsupported"
+    if build.with? "complete"
+      supported_backends.delete "liblzma"
+      args << "--with-liblzma=yes"
+      args.concat(supported_backends.map { |b| "--with-" + b + "=" + HOMEBREW_PREFIX })
+    elsif build.without? "unsupported"
       args.concat(supported_backends.map { |b| "--without-" + b })
     end
 
@@ -223,8 +246,9 @@ class Gdal2 < Formula
     ENV.append "CFLAGS", "-I#{sqlite.opt_include}"
 
     ENV.append "LDFLAGS", "-L#{Formula["ogdi"].opt_lib}/ogdi" if build.with? "ogdi"
-    
-    Dir.chdir('gdal')
+
+    # GDAL looks for the renamed hdf4 library, which is an artifact of old builds, so we need to repoint it
+    inreplace "configure", "-ldf", "-lhdf" if build.with? "complete"
 
     # Reset ARCHFLAGS to match how we build.
     ENV["ARCHFLAGS"] = "-arch #{MacOS.preferred_arch}"
